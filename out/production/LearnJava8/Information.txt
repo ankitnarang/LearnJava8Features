@@ -1,0 +1,237 @@
+Importance of Lambda Expression :
+To enable functional programming
+More readable, maintainable and concise code
+Use APIs more effectively and easily
+To enable parallel processing
+
+1st language to use Lambda Expression : LISP
+
+Lambda Expression
+Anonymous function
+No name, modifiers, no return type
+
+Example :
+
+Normal Method :
+	Public void m(){
+		System.out.println(“Hello”);
+}
+Using Lambda Expression :
+	() -> {
+ System.out.println(“Hello”);
+}
+
+Normal Method :
+	Public void add(int a, int b){
+	System.out.println(a + b);
+}
+
+Using Lambda Expression :
+	(int a, int b) -> {
+	System.out.println(a + b);
+}
+
+Functional Interface
+- To invoke lambda expression
+- Only Single Abstract Method (SAM)
+Ex : Runnable, Callable , ActionListener, Comparable
+
+- User defined Functional Interface
+Example :
+interface Interf {
+    public void method1(); // Only 1 abstarct method
+    default void method2();
+    static void method3();
+}
+
+- @FunctionalInterface annotation
+- It acts as type for lambda expression
+- It can be used to invoke lambda expression
+- If interface extends functional interface and child interface does not contain any abstract method
+then child interface is always functional interface.
+- In this child interface, we can define exactly same abstract method, it will be overriding of parent's
+abstract method.
+- In the child interface, we can't define any new abstract methods otherwise we will get compile time error.
+
+- Why Functional Interface should contain only 1 abstract method ?
+Ans : As Interfae acts as type reference for lambda expression containing implementation of that abstract
+method of interface, if there are more than 1 abstract method then compiler will find ambiguity in
+deciding which function to call, hence 1 abstract method
+
+- Why FunctionalInterface annotation is used? - For type safety
+
+Anonymous Inner Class vs Lambda Expression
+- Anonymous inner class can be replaced with lambda expression but not always.
+
+3 examples :
+Example 1 : Anonymous inner class which extends concrete class
+class Test {
+
+}
+
+Test t = new Test(){
+
+}
+
+Example 2 : Anonymous inner class which extends abstract class
+abstract class Test {
+    public void method();
+}
+
+Test t = new Test(){
+    @Override
+    public void method(){
+
+    }
+}
+
+Example 2 : Anonymous inner class which extends interface having multiple methods
+abstract class Test {
+    public void method1();
+    public void method2();
+    public void method3();
+}
+
+Test t = new Test(){
+    @Override
+    public void method1(){
+
+    }
+    @Override
+    public void method2(){
+
+    }
+    @Override
+    public void method3(){
+
+    }
+}
+
+Conclusion :
+- Only Anonymous class implementing an interface with 1 ABSTRACT METHOD can be
+replaced with lambda expression.
+- Anonymous class is not equal to lambda expression.
+- Anonymous class is more powerful as not all anonymous class can be converted to lambda expression.
+
+This keyword behaves different in anonymous class and in lambda expression.
+
+
+Anonymous class vs Lambda Expression
+- Class without name
+- function without name (anonymous function)
+
+- Anonymous inner class can extend abstract class and concrete class
+- Lambda expression can't extend abstract class and concrete classes.
+
+- Anonymous  inner class can implement an interface with any no fo abstract methods
+- Lambda expression can implement an interface with only 1 abstract method
+
+- Inside anonymous inner class, we can declare instance variables
+- Inside lambda expression, we can't declare instance variables. The variables declared inside lambda expression
+are local variables
+
+- anonymous inner class can be instantiated.
+- lambda expression can not be instantiated.
+
+- Inside anonymous inner class, this keyword always refer  to current anonymous inner class object but not outer
+class object.
+- Inside lambda expression, this keyword always refer to current outer class object.
+
+- Anonymous class is best if we want to handle multiple methods.
+- Lambda expression is used with single abstract method
+
+- During compilation, for anonymous inner class, a separate class file is generated
+- No separate class file is generated in case of lambda expression.
+
+- in anonymous inner class, memory will be allocated on demand when object is created.
+- lambda expression will reside in permanent memory of JVM (method area).
+
+
+Advantages of Lambda Expression :
+- enable functional programming
+- reduce length of code and readability is improved
+- resolve complexity of anonymous inner class till some extent.
+- can handle  procedures/functions like values
+- can handle procedures/functions like arguments
+- Easier to use updated APIS and libraries
+- Enable support for parallel processing
+
+
+Interface (with default methods) vs Abstract Class
+- Inside interface every variable is always public, static and final and we can not declare instance varibales
+- Inside abstract class, we can declare instance variables which can be used in child class.
+
+- Interface never talks about state of the object
+- Abstract class can talk about state of the object.
+
+- Inside Interface, we can't declare constructors.
+- Inside abstract class, we can declare constructors.
+
+- Inside Interface, we can't declare instance and static blocks
+- Inside abstract class, we can declare instance and static blocks
+
+- Functional Interface with default methods can call lambda expression
+- Abstract class can not call lambda expression
+
+- Inside Interface, we can't override object class methods like hashcode,equals etc.
+- Inside abstract class, can override object class methods like hashcode,equals etc.
+
+Conclusion : Interface (with default methods ) is not equal to Abstract class
+
+static methods inside Interface
+ - utility methods
+ - overriding concept doesn't work with interface static methods
+
+
+Some of the existing Functional Interfaces in java util library :
+ - Predicate : to do conditional check
+    test() : returns boolean
+    join methods inside Predicate are : negate(), and(), or()
+ - Function:
+    Function<T,R> : R apply(T t);
+
+    - To perform conditional check, we should go for Predicate.
+    - To perform certain operation and to return some result, we should go for Function.
+
+    - Predicate takes 1 argument type and returns boolean.
+    - Function takes input argument and return argument
+
+ - Consumer
+    will accept argument but return void.
+    accept()
+
+ - Supplier
+    will return something but accept nothing
+    get()
+
+Method reference and constructor reference using Double colon operator (::)
+- Lambda expression can be replaced with Method Reference
+- For static method :
+    ClassName :: method(static)
+- For Instance method :
+    Object Reference :: method (non static / instance)
+
+Constructor Reference
+- For construction of object
+    Example :- ClassName :: new
+
+Streams
+ - To process data from collection
+    1. Configuration
+        - Filter : If we want to filter elements from collection based on some boolean condition then we should go for
+                    filtering. we can configure filter by using filter(Predicate<T> t) method of stream interface
+
+            or
+
+        - Map : If we want to create separate new object for every objet present in the collection based on some
+                function then we should go for mapping mechanism. We can implement mapping by using map(Function<T,R> t)
+                method of stream interface.
+    2. Processing
+        - Collect : collect() : Collect the elements from stream and add to specified collection.
+            Example: collect(Collectors.toList())
+        - count : public long count()
+        - sorted :  sorted() - natural sorting order
+                    sorted(Comparator c) - customized sorting order
+        - min() and max()
+        - forEach()
+        - toArray()
